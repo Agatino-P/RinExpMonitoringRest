@@ -1,0 +1,6 @@
+@RinExp_HostAddress = http://localhost:5271
+
+GET {{RinExp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

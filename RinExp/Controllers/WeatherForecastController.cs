@@ -28,4 +28,14 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
     }
+
+
+    [HttpPost("Post")]
+    public IActionResult SamplePost(PostData data)
+    {
+        return Ok(new PostData(data.First.ToUpperInvariant(), data.Last.ToUpperInvariant()));
+    }
+
 }
+
+public record PostData(string First, string Last);

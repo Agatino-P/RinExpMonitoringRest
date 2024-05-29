@@ -6,7 +6,7 @@ public class Program
     public static void Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-        builder.Logging.AddRinLogger();
+        //builder.Logging.AddRinLogger();
 
         // Add services to the container.
 
@@ -33,7 +33,8 @@ public class Program
 
 
         app.MapControllers();
-
+        var logFact = app.Services.GetRequiredService<ILoggerFactory>();
+        logFact.AddRinLogger(app.Services);
         app.Run();
     }
 }

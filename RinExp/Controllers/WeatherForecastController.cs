@@ -11,15 +11,20 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly IServiceProvider serviceProvider;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
     {
         _logger = logger;
+        this._loggerFactory = loggerFactory;
+        this.serviceProvider = serviceProvider;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
+        _logger.LogInformation("Get Called");
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -33,6 +38,7 @@ public class WeatherForecastController : ControllerBase
     [HttpPost("Post")]
     public IActionResult SamplePost(PostData data)
     {
+        _loggerFactory.AddRinLogger(serviceProvider);
         return Ok(new PostData(data.First.ToUpperInvariant(), data.Last.ToUpperInvariant()));
     }
 
